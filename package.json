@@ -1,0 +1,34 @@
+{
+  "name": "video-core-kit",
+  "version": "0.1.0",
+  "description": "Headless 影片播放核心 — HLS/DASH/MP4/YouTube 統一、engine 注入(零依賴)、預覽秒開→無縫切正片、進度/畫質事件。各框架套薄殼共用。",
+  "main": "index.js",
+  "scripts": {
+    "example": "node example.js"
+  },
+  "keywords": [
+    "video",
+    "player",
+    "hls",
+    "dash",
+    "headless",
+    "shaka",
+    "hls.js",
+    "youtube",
+    "streaming",
+    "播放器",
+    "影片",
+    "無頭"
+  ],
+  "author": "Jeffrey0117",
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "example.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
