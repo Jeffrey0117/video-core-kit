@@ -143,6 +143,14 @@ function createHlsAdapter(video, source, engine, emit, opts) {
     hls.loadSource(source.src);
     hls.attachMedia(video);
 
+    // manifest 解析完 → 畫質清單就緒（消費端才能建 Plyr/自訂畫質選單）
+    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+      emit('qualities', { qualities: getQualities() });
+    });
+    hls.on(Hls.Events.LEVEL_SWITCHED, function () {
+      emit('qualitychange', { id: hls.currentLevel, auto: hls.autoLevelEnabled });
+    });
+
     hls.on(Hls.Events.ERROR, function (event, data) {
       if (data && data.fatal) {
         emit('error', { fatal: true, engine: 'hls', detail: data, fallbackSrc: source.fallbackSrc || null });
@@ -205,7 +213,8 @@ function createDashAdapter(video, source, engine, emit, opts) {
     var onQ = function () { emit('qualitychange', { id: activeTrackId() }); };
     player.addEventListener('adaptation', onQ);
     player.addEventListener('variantchanged', onQ);
-    return player.load(source.src, (opts && opts.startTime) || null, source.mimeType);
+    return player.load(source.src, (opts && opts.startTime) || null, source.mimeType)
+      .then(function () { emit('qualities', { qualities: getQualities() }); });
   }).catch(function (err) {
     emit('error', { fatal: true, engine: 'dash', detail: err, fallbackSrc: source.fallbackSrc || null });
   });
