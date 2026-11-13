@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.svg" width="96" height="96" alt="video-core-kit logo">
+</p>
+
 # video-core-kit
 
 > Headless 影片播放核心 — 三站共用一顆邏輯核心。
